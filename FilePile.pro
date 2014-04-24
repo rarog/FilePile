@@ -19,6 +19,7 @@ HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
 
+CONFIG += c++11
 CONFIG += mobility
 MOBILITY = 
 
