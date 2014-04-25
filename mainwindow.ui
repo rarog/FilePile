@@ -17,9 +17,6 @@
    <iconset>
     <normaloff>res/filepile_256.png</normaloff>res/filepile_256.png</iconset>
   </property>
-  <property name="locale">
-   <locale language="English" country="UnitedStates"/>
-  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
@@ -66,7 +63,13 @@
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string>About...</string>
+   </property>
+   <property name="iconText">
+    <string>About...</string>
+   </property>
+   <property name="toolTip">
+    <string>About...</string>
    </property>
   </action>
  </widget>

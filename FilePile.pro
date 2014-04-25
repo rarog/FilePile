@@ -34,7 +34,13 @@ OTHER_FILES += \
     res/filepile_256.png \
     res/filepile_72.png \
     res/filepile_48.png \
-    res/filepile_36.png
+    res/filepile_36.png \
+    translations/FilePile_de_DE.ts \
+    android/res/drawable-hdpi/icon.png \
+    android/res/drawable-ldpi/icon.png \
+    android/res/drawable-mdpi/icon.png
+
+TRANSLATIONS +=  translations/FilePile_de_DE.ts
 
 RESOURCES += \
     res.qrc
