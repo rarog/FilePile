@@ -23,11 +23,11 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QScrollArea" name="MainFrame">
+     <widget class="QScrollArea" name="ContentFrame">
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
+      <widget class="QWidget" name="ContentFrameWidget">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -54,6 +54,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionAbout"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -61,6 +62,11 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>
@@ -83,5 +89,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showAboutForm()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>showAboutForm()</slot>
+ </slots>
 </ui>
