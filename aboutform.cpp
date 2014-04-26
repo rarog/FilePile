@@ -1,6 +1,11 @@
 #include "aboutform.h"
 #include "ui_aboutform.h"
 
+/**
+ * @brief Constructor, that creates the application info form.
+ *
+ * @param parent Parent form
+ */
 AboutForm::AboutForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AboutForm)
@@ -11,11 +16,21 @@ AboutForm::AboutForm(QWidget *parent) :
     ui->infoTextBox->setPlainText(getVersionText());
 }
 
+
+/**
+ * @brief Destructor
+ *
+ */
 AboutForm::~AboutForm()
 {
     delete ui;
 }
 
+/**
+ * @brief Compiles all information for the info box.
+ *
+ * @return QString
+ */
 QString AboutForm::getVersionText() {
     QString result = tr(
        "%1\n"
@@ -40,7 +55,12 @@ QString AboutForm::getVersionText() {
     return result;
 }
 
-// Taken from icore.cpp of Qt Creator
+/**
+ * @brief Compiles information about used compiler.
+ * @details Taken from icore.cpp of Qt Creator.
+ *
+ * @return QString
+ */
 QString AboutForm::compilerString(){
 #if defined(Q_CC_CLANG) // must be before GNU, because clang claims to be GNU too
     QString isAppleString;
@@ -60,6 +80,11 @@ QString AboutForm::compilerString(){
     return QLatin1String("<unknown compiler>");
 }
 
+/**
+ * @brief Compiles information block with application name and version.
+ *
+ * @return QString
+ */
 QString AboutForm::versionString(){
     return tr("%1 %2\n").arg(
         QLatin1String(APP_NAME),
@@ -67,6 +92,11 @@ QString AboutForm::versionString(){
     );
 }
 
+/**
+ * @brief Compiles information about used Qt version.
+ *
+ * @return QString
+ */
 QString AboutForm::buildCompatibilityString()
 {
     return tr("Based on Qt %1 (%2, %3 bit)").arg(

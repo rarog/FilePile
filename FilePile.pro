@@ -38,7 +38,8 @@ OTHER_FILES += \
     translations/FilePile_de_DE.ts \
     android/res/drawable-hdpi/icon.png \
     android/res/drawable-ldpi/icon.png \
-    android/res/drawable-mdpi/icon.png
+    android/res/drawable-mdpi/icon.png \
+    Doxyfile
 
 TRANSLATIONS +=  translations/FilePile_de_DE.ts
 
