@@ -14,10 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    aboutform.cpp
+    aboutform.cpp \
+    sqlhelper.cpp
 
 HEADERS  += mainwindow.h \
-    aboutform.h
+    aboutform.h \
+    sqlhelper.h \
+    common.h
 
 FORMS    += mainwindow.ui \
     aboutform.ui
@@ -39,7 +42,10 @@ OTHER_FILES += \
     android/res/drawable-hdpi/icon.png \
     android/res/drawable-ldpi/icon.png \
     android/res/drawable-mdpi/icon.png \
+    sql/dbversion.ini \
     Doxyfile
+
+QT +=sql
 
 TRANSLATIONS +=  translations/FilePile_de_DE.ts
 

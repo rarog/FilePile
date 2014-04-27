@@ -6,5 +6,6 @@
         <file>res/filepile_256.png</file>
         <file>res/filepile_512.png</file>
         <file>translations/FilePile_de_DE.qm</file>
+        <file>sql/dbversion.ini</file>
     </qresource>
 </RCC>
