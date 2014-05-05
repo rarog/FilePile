@@ -31,6 +31,59 @@ SQLHelper::SQLHelper(QObject *parent) :
 }
 
 /**
+ * @brief Gets the current version of the database. Creates the version table if it doesn't exist yet.
+ *
+ * @param db Database that should be checked.
+ * @param dbMajor Reference to integer variable to receive major version part.
+ * @param dbMinor Reference to integer variable to receive minor version part.
+ * @return bool Indicates if version info could be retrieved successfully.
+ */
+bool SQLHelper::getDbVersion(QSqlDatabase db, int &dbMajor, int &dbMinor)
+{
+    if (db.isValid() && db.isOpen())
+    {
+        QSqlQuery query("CREATE TABLE IF NOT EXISTS \"_dbversion\" (\"major\" INT, \"minor\" INT) WITHOUT ROWID;"
+                    "SELECT \"major\", \"minor\" FROM \"_dbversion\";", db);
+        if (query.isActive() && query.first())
+        {
+            dbMajor = query.value(0).Int;
+            dbMinor = query.value(1).Int;
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * @brief Updates the database.
+ *
+ * @param sqlString SQL string used to update the database.
+ * @param db Database that should be updated.
+ * @param dbMajor Major part of database update version.
+ * @param dbMinor Minor part of database update version.
+ * @return bool Indicates if database update ran successfully.
+ */
+bool updateDb(QString sqlString, QSqlDatabase db, int dbMajor, int dbMinor)
+{
+    if (db.isValid() && db.transaction() && db.isOpen())
+    {
+        QSqlQuery query(db);
+
+        if (query.prepare("UPDATE \"_dbversion\" SET \"major\"=:major, \"minor\"=:minor"))
+        {
+            query.bindValue(":major", dbMajor);
+            query.bindValue(":minor", dbMinor);
+            if (query.exec() && query.exec(sqlString) && db.commit())
+            {
+                return true;
+            }
+        }
+        db.rollback();
+    }
+    return false;
+}
+
+/**
  * @brief Checks presence of DB and updates it if needed.
  *
  * @return bool State, if DB is valid and up to date.
@@ -63,16 +116,8 @@ bool SQLHelper::ensurePresenceOfCurrentDB()
         path.append("settings.db");
         db.setDatabaseName(path);
         db.setConnectOptions("QSQLITE_BUSY_TIMEOUT");
-        if (db.open())
+        if (db.open() && getDbVersion(db, dbMajor, dbMinor))
         {
-            QSqlQuery query("CREATE TABLE IF NOT EXISTS \"_dbversion\" (\"major\" INT, \"minor\" INT) WITHOUT ROWID;"
-                            "SELECT \"major\", \"minor\" FROM \"_dbversion\";");
-            if (query.next())
-            {
-                dbMajor = query.value(0).Int;
-                dbMinor = query.value(1).Int;
-            }
-
             if ((dbMajor == 0) && (dbMinor == 0))
             {
                 // Fresh db initialization
@@ -89,12 +134,10 @@ bool SQLHelper::ensurePresenceOfCurrentDB()
                 if (sqlFile.isOpen())
                 {
                     QTextStream in(&sqlFile);
-                    db.transaction();
-                    if ((result = query.exec(in.readAll())))
-                        db.commit();
-                    else
-                        db.rollback();
-
+                    if (updateDb(in.readAll(), db, appMajor, 0))
+                    {
+                        getDbVersion(db, dbMajor, dbMinor);
+                    }
                 }
             }
         }

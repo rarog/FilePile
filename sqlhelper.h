@@ -32,6 +32,9 @@
 class SQLHelper : public QObject
 {
     Q_OBJECT
+private:
+    static bool getDbVersion(QSqlDatabase db, int &dbMajor, int &dbMinor);
+    static bool updateDb(QString sqlString, QSqlDatabase db, int dbMajor, int dbMinor);
 public:
     explicit SQLHelper(QObject *parent = 0);
     static bool ensurePresenceOfCurrentDB();
