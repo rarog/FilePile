@@ -63,7 +63,7 @@ bool SQLHelper::getDbVersion(QSqlDatabase db, int &dbMajor, int &dbMinor)
  * @param dbMinor Minor part of database update version.
  * @return bool Indicates if database update ran successfully.
  */
-bool updateDb(QString sqlString, QSqlDatabase db, int dbMajor, int dbMinor)
+bool SQLHelper::updateDb(QString sqlString, QSqlDatabase db, int dbMajor, int dbMinor)
 {
     if (db.isValid() && db.transaction() && db.isOpen())
     {
